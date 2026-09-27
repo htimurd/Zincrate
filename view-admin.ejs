@@ -1,0 +1,44 @@
+<%- include('view-header') %>
+
+<div class="page-head">
+  <h1>Админ-панель</h1>
+  <p class="page-sub"><a href="/admin/submissions" class="btn btn-ghost">Заявки на проверку →</a></p>
+</div>
+
+<section class="panel">
+  <h2>Добавить уровень в список</h2>
+  <%- include('view-level-form', { formAction: '/levels', submitLabel: 'Добавить в список' }) %>
+</section>
+
+<section class="panel">
+  <h2>Текущий список</h2>
+  <table class="datatable">
+    <thead>
+      <tr><th>#</th><th>Название</th><th>Автор</th><th>Сложность</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% levels.forEach(level => { %>
+        <tr>
+          <td><%= level.position %></td>
+          <td><%= level.name %></td>
+          <td><%= level.author %></td>
+          <td>
+            <span class="badge badge-<%= level.difficulty.toLowerCase().replace(/\s+/g,'-') %>"><%= level.difficulty %></span>
+            <% if (level.stars) { %><span class="badge badge-stars"><%= level.stars %>★</span><% } %>
+          </td>
+          <td class="row-actions">
+            <a href="/levels/<%= level.id %>/edit" class="btn btn-ghost btn-small">Изменить</a>
+            <form method="POST" action="/levels/<%= level.id %>/delete" onsubmit="return confirm('Удалить этот уровень из списка?');">
+              <button type="submit" class="btn btn-danger btn-small">Удалить</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (levels.length === 0) { %>
+        <tr><td colspan="5" class="muted">Список пуст.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('view-footer') %>

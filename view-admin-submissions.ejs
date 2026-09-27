@@ -1,0 +1,40 @@
+<%- include('view-header') %>
+
+<div class="page-head">
+  <h1>Заявки игроков</h1>
+  <p class="page-sub"><a href="/admin" class="btn btn-ghost">← К списку уровней</a></p>
+</div>
+
+<section class="panel">
+  <table class="datatable">
+    <thead>
+      <tr><th>Игрок</th><th>Уровень</th><th>Прогресс</th><th>Видео</th><th>Статус</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% submissions.forEach(s => { %>
+        <tr class="status-row status-<%= s.status %>">
+          <td><%= s.user_name %></td>
+          <td><%= s.level_name %></td>
+          <td><%= s.progress %>%</td>
+          <td><a href="<%= s.video_url %>" target="_blank" rel="noopener">Ссылка</a></td>
+          <td><span class="status-label"><%= s.status %></span></td>
+          <td class="row-actions">
+            <% if (s.status === 'pending') { %>
+              <form method="POST" action="/submissions/<%= s.id %>/approve">
+                <button type="submit" class="btn btn-accent btn-small">Одобрить</button>
+              </form>
+              <form method="POST" action="/submissions/<%= s.id %>/reject">
+                <button type="submit" class="btn btn-danger btn-small">Отклонить</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (submissions.length === 0) { %>
+        <tr><td colspan="6" class="muted">Заявок пока нет.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('view-footer') %>

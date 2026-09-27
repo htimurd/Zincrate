@@ -1,0 +1,83 @@
+<%- include('view-header') %>
+
+<div class="level-hero">
+  <% if (level.image_url) { %>
+    <img src="<%= level.image_url %>" alt="" class="level-hero-thumb">
+  <% } else { %>
+    <span class="level-hero-thumb level-thumb-empty"><%= level.name.charAt(0).toUpperCase() %></span>
+  <% } %>
+
+  <div class="level-hero-info">
+    <h1><%= level.name %></h1>
+    <p class="level-author">автор: <%= level.author %></p>
+
+    <div class="level-tags">
+      <span class="badge badge-<%= level.difficulty.toLowerCase().replace(/\s+/g,'-') %>"><%= level.difficulty %></span>
+      <% if (level.stars) { %><span class="badge badge-stars"><%= level.stars %>★</span><% } %>
+    </div>
+
+    <dl class="level-facts">
+      <% if (level.level_id) { %>
+        <div><dt>ID уровня</dt><dd><%= level.level_id %></dd></div>
+      <% } %>
+      <% if (level.verifier) { %>
+        <div><dt>Проверил</dt><dd><%= level.verifier %></dd></div>
+      <% } %>
+      <% if (level.video_url) { %>
+        <div><dt>Видео верификации</dt><dd><a href="<%= level.video_url %>" target="_blank" rel="noopener">Смотреть</a></dd></div>
+      <% } %>
+    </dl>
+
+    <% if (level.description) { %>
+      <p class="level-description"><%= level.description %></p>
+    <% } %>
+  </div>
+</div>
+
+<section class="panel">
+  <h2>Одобренные результаты</h2>
+  <table class="datatable">
+    <thead>
+      <tr><th>Игрок</th><th>Прогресс</th><th>Видео</th></tr>
+    </thead>
+    <tbody>
+      <% records.forEach(r => { %>
+        <tr>
+          <td><%= r.user_name %></td>
+          <td><%= r.progress %>%</td>
+          <td><a href="<%= r.video_url %>" target="_blank" rel="noopener">Ссылка</a></td>
+        </tr>
+      <% }) %>
+      <% if (records.length === 0) { %>
+        <tr><td colspan="3" class="muted">Пока никто не прошёл этот уровень.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<section class="panel">
+  <h2>Отправить свой результат</h2>
+
+  <% if (submitted) { %>
+    <p class="alert-success">Результат отправлен и ждёт проверки админом.</p>
+  <% } %>
+
+  <% if (locals.currentUser) { %>
+    <form method="POST" action="/submissions" class="stack-form">
+      <input type="hidden" name="level_id" value="<%= level.id %>">
+      <label>
+        Ссылка на видео
+        <input type="url" name="video_url" required placeholder="https://youtube.com/...">
+      </label>
+      <label>
+        Прогресс, %
+        <input type="number" name="progress" min="1" max="100" value="100">
+      </label>
+      <button type="submit" class="btn btn-accent">Отправить на проверку</button>
+    </form>
+  <% } else { %>
+    <p><a href="/auth/google" class="btn btn-accent">Войдите через Google</a>, чтобы отправить свой результат.</p>
+  <% } %>
+</section>
+
+<%- include('view-footer') %>

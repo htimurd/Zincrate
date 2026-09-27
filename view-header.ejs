@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zincrate — Aero GDPS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="/" class="brand">
+      <span class="brand-mark"></span>
+      <span class="brand-text">Zincrate<small>Aero GDPS</small></span>
+    </a>
+
+    <nav class="mainnav">
+      <a href="/">Список</a>
+      <a href="/leaderboard">Игроки</a>
+      <% if (locals.isAdmin) { %>
+        <a href="/admin">Админ-панель</a>
+      <% } %>
+    </nav>
+
+    <div class="authbox">
+      <% if (locals.currentUser) { %>
+        <span class="username"><%= currentUser.name %></span>
+        <a href="/auth/logout" class="btn btn-ghost">Выйти</a>
+      <% } else { %>
+        <a href="/auth/google" class="btn btn-accent">Войти через Google</a>
+      <% } %>
+    </div>
+  </header>
+
+  <main class="page">

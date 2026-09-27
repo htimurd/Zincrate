@@ -1,0 +1,38 @@
+<%- include('view-header') %>
+
+<div class="page-head">
+  <h1>Список уровней</h1>
+  <p class="page-sub">Официальный рейтинг уровней сервера Aero GDPS, от самого простого до самого сложного.</p>
+</div>
+
+<div class="level-list">
+  <% levels.forEach((level, i) => { %>
+    <a href="/levels/<%= level.id %>" class="level-row">
+      <span class="rank">#<%= i + 1 %></span>
+
+      <% if (level.image_url) { %>
+        <img src="<%= level.image_url %>" alt="" class="level-thumb">
+      <% } else { %>
+        <span class="level-thumb level-thumb-empty"><%= level.name.charAt(0).toUpperCase() %></span>
+      <% } %>
+
+      <span class="level-info">
+        <span class="level-name"><%= level.name %></span>
+        <span class="level-author">автор: <%= level.author %></span>
+      </span>
+
+      <span class="level-tags">
+        <span class="badge badge-<%= level.difficulty.toLowerCase().replace(/\s+/g,'-') %>"><%= level.difficulty %></span>
+        <% if (level.stars) { %><span class="badge badge-stars"><%= level.stars %>★</span><% } %>
+      </span>
+    </a>
+  <% }) %>
+
+  <% if (levels.length === 0) { %>
+    <div class="empty-state">
+      <p>Список пока пуст. Первые уровни скоро появятся здесь.</p>
+    </div>
+  <% } %>
+</div>
+
+<%- include('view-footer') %>

@@ -1,0 +1,65 @@
+<%
+  // locals.level (опционально) — существующий уровень для режима редактирования
+  // locals.formAction — куда отправлять форму
+  // locals.submitLabel — текст кнопки
+  const lv = locals.level || {};
+%>
+<form method="POST" action="<%= formAction %>" class="stack-form admin-form">
+  <div class="form-grid">
+    <label>
+      Позиция в списке
+      <input type="number" name="position" value="<%= lv.position || 0 %>">
+    </label>
+
+    <label>
+      Название уровня
+      <input type="text" name="name" value="<%= lv.name || '' %>" required>
+    </label>
+
+    <label>
+      Автор
+      <input type="text" name="author" value="<%= lv.author || '' %>" required>
+    </label>
+
+    <label>
+      ID уровня в игре
+      <input type="text" name="level_id" value="<%= lv.level_id || '' %>">
+    </label>
+
+    <label>
+      Сложность
+      <select name="difficulty">
+        <% ['Easy','Normal','Hard','Harder','Insane','Easy Demon','Medium Demon','Hard Demon','Insane Demon','Extreme Demon','Unrated'].forEach(d => { %>
+          <option value="<%= d %>" <%= lv.difficulty === d ? 'selected' : '' %>><%= d %></option>
+        <% }) %>
+      </select>
+    </label>
+
+    <label>
+      Звёзды (необязательно)
+      <input type="number" name="stars" min="1" max="10" value="<%= lv.stars || '' %>">
+    </label>
+
+    <label class="span-2">
+      Ссылка на картинку уровня
+      <input type="url" name="image_url" value="<%= lv.image_url || '' %>" placeholder="https://...">
+    </label>
+
+    <label>
+      Кем проверено
+      <input type="text" name="verifier" value="<%= lv.verifier || '' %>">
+    </label>
+
+    <label>
+      Видео верификации
+      <input type="url" name="video_url" value="<%= lv.video_url || '' %>">
+    </label>
+
+    <label class="span-2">
+      Описание
+      <textarea name="description" rows="3"><%= lv.description || '' %></textarea>
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-accent"><%= submitLabel %></button>
+</form>

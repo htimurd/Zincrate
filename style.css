@@ -1,0 +1,502 @@
+/* ---------------------------------------------------------
+   Zincrate — Aero GDPS
+   Palette: deep indigo base, clipped-corner geometry echoing
+   GD's cubes/diamonds, cyan + magenta accents from the
+   in-game icon trail colors.
+--------------------------------------------------------- */
+
+:root {
+  --bg: #0D0F1C;
+  --surface: #161A2E;
+  --surface-2: #1E2340;
+  --border: #2B3156;
+  --text: #EDEFF7;
+  --text-muted: #8A90AD;
+  --cyan: #37E8E0;
+  --magenta: #FF3D81;
+
+  --diff-easy: #6FCF7A;
+  --diff-normal: #7ED0E8;
+  --diff-hard: #F2C94C;
+  --diff-harder: #F2994A;
+  --diff-insane: #EB5757;
+  --diff-demon: #B14AED;
+  --diff-extreme: #FF3D81;
+
+  --cut: 14px;
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0 0 0.4em;
+  letter-spacing: 0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Top bar ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-text small {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.mainnav {
+  display: flex;
+  gap: 22px;
+  flex: 1;
+}
+
+.mainnav a {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: color 0.15s ease;
+}
+
+.mainnav a:hover {
+  color: var(--cyan);
+}
+
+.authbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 20px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: none;
+  cursor: pointer;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.btn:hover { filter: brightness(1.1); }
+.btn:active { transform: scale(0.97); }
+
+.btn-accent {
+  background: linear-gradient(120deg, var(--cyan), #22B8D9);
+  color: #06121A;
+}
+
+.btn-ghost {
+  background: var(--surface-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-danger {
+  background: rgba(235, 87, 87, 0.15);
+  color: var(--diff-insane);
+  border: 1px solid rgba(235, 87, 87, 0.4);
+}
+
+.btn-small {
+  padding: 6px 14px;
+  font-size: 0.78rem;
+}
+
+/* ---------- Layout ---------- */
+
+.page {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.page-head {
+  margin-bottom: 28px;
+}
+
+.page-sub {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.sitefooter {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Level list ---------- */
+
+.level-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.level-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.level-row:hover {
+  border-color: var(--cyan);
+  transform: translateX(2px);
+}
+
+.rank {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 44px;
+}
+
+.level-thumb {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  flex-shrink: 0;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+}
+
+.level-thumb-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-muted);
+}
+
+.level-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.level-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.level-author {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.level-tags {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ---------- Difficulty badges ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #06121A;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  white-space: nowrap;
+}
+
+.badge-easy { background: var(--diff-easy); }
+.badge-normal { background: var(--diff-normal); }
+.badge-hard { background: var(--diff-hard); }
+.badge-harder { background: var(--diff-harder); }
+.badge-insane { background: var(--diff-insane); color: #fff; }
+.badge-easy-demon, .badge-medium-demon, .badge-hard-demon, .badge-insane-demon {
+  background: var(--diff-demon);
+  color: #fff;
+}
+.badge-extreme-demon {
+  background: linear-gradient(120deg, var(--magenta), #8E1F55);
+  color: #fff;
+}
+.badge-unrated {
+  background: var(--surface-2);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.badge-stars {
+  background: var(--surface-2);
+  color: var(--cyan);
+  border: 1px solid var(--border);
+}
+
+/* ---------- Level detail ---------- */
+
+.level-hero {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.level-hero-thumb {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  flex-shrink: 0;
+  clip-path: polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px);
+}
+
+.level-hero-thumb.level-thumb-empty {
+  font-size: 3rem;
+}
+
+.level-hero-info h1 {
+  margin-bottom: 4px;
+}
+
+.level-tags {
+  margin: 12px 0;
+}
+
+.level-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 14px 0 0;
+}
+
+.level-facts > div {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.level-facts dt {
+  color: var(--text-muted);
+  min-width: 150px;
+}
+
+.level-facts dd {
+  margin: 0;
+}
+
+.level-description {
+  margin-top: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------- Panels & tables ---------- */
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 20px;
+  clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+}
+
+.datatable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.datatable th {
+  text-align: left;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.datatable td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.datatable tr:last-child td {
+  border-bottom: none;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.status-label {
+  text-transform: capitalize;
+  font-size: 0.82rem;
+}
+
+.status-approved .status-label { color: var(--diff-easy); }
+.status-rejected .status-label { color: var(--diff-insane); }
+.status-pending .status-label { color: var(--diff-hard); }
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- Forms ---------- */
+
+.stack-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 420px;
+}
+
+.stack-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.stack-form input,
+.stack-form select,
+.stack-form textarea {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+
+.stack-form input:focus,
+.stack-form select:focus,
+.stack-form textarea:focus {
+  outline: none;
+  border-color: var(--cyan);
+}
+
+.admin-form {
+  max-width: none;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 20px;
+  margin-bottom: 18px;
+}
+
+.form-grid .span-2 {
+  grid-column: 1 / -1;
+}
+
+.alert-success {
+  background: rgba(111, 207, 122, 0.12);
+  border: 1px solid rgba(111, 207, 122, 0.4);
+  color: var(--diff-easy);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+}
+
+/* ---------- Empty / error states ---------- */
+
+.empty-state {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  border: 1px dashed var(--border);
+}
+
+.error-page {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.error-page h1 {
+  font-size: 3rem;
+  color: var(--magenta);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+  .mainnav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .level-hero {
+    flex-direction: column;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

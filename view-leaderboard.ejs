@@ -1,0 +1,28 @@
+<%- include('view-header') %>
+
+<div class="page-head">
+  <h1>Игроки</h1>
+  <p class="page-sub">Рейтинг по числу одобренных прохождений уровней из списка.</p>
+</div>
+
+<section class="panel">
+  <table class="datatable">
+    <thead>
+      <tr><th>#</th><th>Игрок</th><th>Пройдено уровней</th></tr>
+    </thead>
+    <tbody>
+      <% players.forEach((p, i) => { %>
+        <tr>
+          <td>#<%= i + 1 %></td>
+          <td><%= p.name %></td>
+          <td><%= p.completions %></td>
+        </tr>
+      <% }) %>
+      <% if (players.length === 0) { %>
+        <tr><td colspan="3" class="muted">Пока нет одобренных результатов.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</section>
+
+<%- include('view-footer') %>

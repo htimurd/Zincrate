@@ -1,0 +1,11 @@
+<%- include('view-header') %>
+
+<div class="page-head">
+  <h1>Изменить уровень</h1>
+</div>
+
+<section class="panel">
+  <%- include('view-level-form', { level: level, formAction: `/levels/${level.id}/edit`, submitLabel: 'Сохранить изменения' }) %>
+</section>
+
+<%- include('view-footer') %>
